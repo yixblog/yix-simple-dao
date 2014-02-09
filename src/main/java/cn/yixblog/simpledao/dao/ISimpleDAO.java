@@ -9,9 +9,9 @@ import java.util.List;
 public interface ISimpleDAO<T> {
     public T findOne(Object primary);
 
-    public List<T> list(String fromSql, String orderBy, List<Object> params, int... pageArgs);
+    public List<T> list(String whereSql, String orderBy, List<Object> params, int... pageArgs);
 
-    public int count(String fromSql, List<Object> params);
+    public int count(String whereSql, List<Object> params);
 
     public T save(T obj);
 

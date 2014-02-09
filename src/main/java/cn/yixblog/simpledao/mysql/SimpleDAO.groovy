@@ -27,10 +27,10 @@ abstract class SimpleDAO<T> implements ISimpleDAO<T> {
     }
 
     @Override
-    List<T> list(String fromSql, String orderBy, List<Object> params, int ... pageArgs) {
+    List<T> list(String whereSql, String orderBy, List<Object> params, int ... pageArgs) {
         String sql = "select * from ${dbConfig.getTable()}";
-        if (fromSql != null && fromSql != "") {
-            sql += " where $fromSql ";
+        if (whereSql != null && whereSql != "") {
+            sql += " where $whereSql ";
         }
         if (orderBy != null && orderBy != "") {
             sql += " order by $orderBy "
@@ -44,10 +44,10 @@ abstract class SimpleDAO<T> implements ISimpleDAO<T> {
     protected abstract RowMapper<T> getQueryRowMapper();
 
     @Override
-    int count(String fromSql, List<Object> params) {
+    int count(String whereSql, List<Object> params) {
         String sql = "select count(*) from ${dbConfig.getTable()}";
-        if (fromSql != null && fromSql != "") {
-            sql += " where $fromSql ";
+        if (whereSql != null && whereSql != "") {
+            sql += " where $whereSql ";
         }
         Number number = jdbcTemplate.queryForObject(sql, params.toArray(), Integer.class);
         return (number != null ? number.intValue() : 0);
